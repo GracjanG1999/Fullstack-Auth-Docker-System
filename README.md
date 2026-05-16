@@ -1,48 +1,120 @@
-## System Zarzadzania Uzytkownikami (Fullstack)
-Projekt aplikacji typu Fullstack umozliwiajacej zarzadzanie baza uzytkowników z podzialem na role (Admin/User).
+# Fullstack Auth Docker System
 
-### Funkcjonalnosci
-Logowanie i Rejestracja: System autentykacji z walidacja danych.
+System zarządzania użytkownikami z podziałem na role (Admin/User), zbudowany w architekturze fullstack z obsługą Docker.
 
-Panel Admina: Pelne operacje CRUD (Tworzenie, Odczyt, Edycja, Usuwanie).
-Panel Uzytkownika: Podglad listy uzytkowników (ograniczony zakres danych) bez mozliwosci edycji.
-Auto-initialization: Automatyczne ladowanie danych startowych do bazy przy uruchomieniu.
+---
 
-### Technologie
-Frontend: React.js, Axios, CSS3.
+## Funkcjonalności
 
-Backend: Java 21, Spring Boot 3, Spring Security, JPA/Hibernate.
+- **Logowanie i rejestracja** — autentykacja z walidacją danych
+- **Panel Admina** — pełne operacje CRUD (tworzenie, odczyt, edycja, usuwanie użytkowników)
+- **Panel Użytkownika** — podgląd listy użytkowników bez możliwości edycji
+- **Role** — `ROLE_ADMIN` / `ROLE_USER` z automatycznym przypisaniem przy rejestracji
+- **Auto-inicjalizacja** — domyślne konta ładowane przy pierwszym uruchomieniu
 
-Baza danych: PostgreSQL (Docker).
+---
 
-### Jak uruchomic?
-Wymagania:
-Zainstalowany Docker
-Srodowisko Java 21.
-Node.js oraz npm.
+## Technologie
 
-Dane startowe do bazy (Importowane automatycznie):
- - Admin: login: admin, haslo: admin
- - User: login: user, haslo: user
+| Warstwa     | Technologia                                      |
+|-------------|--------------------------------------------------|
+| Frontend    | React 18, Axios, CSS3                            |
+| Backend     | Java 21, Spring Boot 3, Spring Security, Lombok  |
+| Baza danych | PostgreSQL 15 (Docker)                           |
+| Kontener    | Docker, Docker Compose                           |
 
-## Kroki instalacji:
-1. Sklonuj repozytorium:
-```git clone https://github.com/GracjanG1999/Fullstack-Auth-Docker-System.git```
+---
 
-2. Baza danych (Docker):
-W glównym folderze projektu uruchom terminal i wpisz: ```docker-compose up -d```
+## Architektura (SOLID / DRY / KISS)
 
-3. Backend:
-Przejdz do folderu ```/backend``` i uruchom projekt za pomoca Maven Wrapper:
-```.\mvnw.cmd spring-boot:run (Windows)```
-lub
-```./mvnw spring-boot:run (Linux/Mac)```
+```
+backend/
+├── controller/   AuthController          # HTTP — przyjmuje i zwraca dane
+├── service/      UserService             # logika biznesowa
+│                 UserDetailsServiceImpl  # Spring Security (oddzielona od biznesu)
+├── dto/          LoginRequest            # DTO dla endpointu logowania
+├── model/        User, Role              # encja + stałe ról
+├── repository/   UserRepository          # dostęp do bazy
+└── config/       SecurityConfig          # CORS, filtry bezpieczeństwa
+                  PasswordEncoderConfig   # BCrypt bean
+                  DataInitializer         # dane startowe
 
-4. Frontend:
-Przejdz do folderu ```/frontend``` i wpisz kolejno:
-```npm install```
-```npm start```
+frontend/
+├── api/          authApi.js              # wszystkie wywołania HTTP w jednym miejscu
+├── components/   AuthForm.js             # ekran logowania / rejestracji
+│                 UserTable.js            # panel z tabelą użytkowników
+└── App.js                                # główny komponent — orkiestracja
+```
 
-Adresy:
-Aplikacja dostepna pod adresem: http://localhost:3000
-API Backendowe dostepne pod adresem: http://localhost:8080
+---
+
+## Uruchomienie
+
+### Wymagania
+
+- [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+- Java 21
+- Node.js + npm
+
+### 1. Baza danych (Docker)
+
+```bash
+docker-compose up -d
+```
+
+Uruchamia PostgreSQL na porcie `5432` oraz Adminera (podgląd bazy) na `http://localhost:8081`.
+
+### 2. Backend
+
+```bash
+cd backend
+
+# Windows
+.\mvnw.cmd spring-boot:run
+
+# Linux / macOS
+./mvnw spring-boot:run
+```
+
+### 3. Frontend
+
+```bash
+cd frontend
+npm install
+npm start
+```
+
+---
+
+## Adresy
+
+| Usługa        | Adres                    |
+|---------------|--------------------------|
+| Aplikacja     | http://localhost:3000    |
+| API Backend   | http://localhost:8080    |
+| Adminer (DB)  | http://localhost:8081    |
+
+---
+
+## Dane startowe
+
+Przy pierwszym uruchomieniu aplikacja automatycznie tworzy dwa konta:
+
+| Login   | Hasło   | Rola         |
+|---------|---------|--------------|
+| `admin` | `admin` | `ROLE_ADMIN` |
+| `user`  | `user`  | `ROLE_USER`  |
+
+---
+
+## Zmienne środowiskowe (opcjonalne)
+
+Aplikacja działa z domyślnymi wartościami bez konfiguracji. Można je nadpisać zmiennymi środowiskowymi:
+
+| Zmienna          | Domyślna wartość          | Opis                    |
+|------------------|---------------------------|-------------------------|
+| `DB_HOST`        | `localhost`               | Host bazy PostgreSQL    |
+| `DB_NAME`        | `cyber_db`                | Nazwa bazy danych       |
+| `DB_USER`        | `admin`                   | Użytkownik bazy         |
+| `DB_PASSWORD`    | `admindb`                 | Hasło do bazy           |
+| `CORS_ORIGIN`    | `http://localhost:3000`   | Dozwolone źródło CORS   |

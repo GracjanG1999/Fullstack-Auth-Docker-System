@@ -1,21 +1,25 @@
 # ========================
-# Maven / Backend
+# Git
+# ========================
+.git/
+.gitignore
+.gitattributes
+
+# ========================
+# Build / zależności
 # ========================
 target/
-*.class
-HELP.md
-
-# Maven Wrapper
-.mvn/
-mvnw
-mvnw.cmd
-
-# ========================
-# Frontend (React)
-# ========================
 frontend/node_modules/
 frontend/build/
-frontend/.env*
+
+# ========================
+# IDE
+# ========================
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
 
 # ========================
 # Środowisko / sekrety
@@ -23,26 +27,6 @@ frontend/.env*
 .env
 .env.*
 *.env
-
-# ========================
-# IDE
-# ========================
-.idea/
-*.iws
-*.iml
-*.ipr
-.vscode/
-.classpath
-.project
-.settings/
-.springBeans
-.sts4-cache
-.apt_generated
-.factorypath
-.nb-gradle/
-nbproject/private/
-nbbuild/
-nbdist/
 
 # ========================
 # Logi
@@ -55,6 +39,12 @@ logs/
 # ========================
 .DS_Store
 Thumbs.db
+
+# ========================
+# Dokumentacja
+# ========================
+README.md
+HELP.md
 
 # ========================
 # Claude Code
