@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <title>Projekt Logowanie - Wielmożny Pan Gracjan</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f0f2f5; margin: 0; }
+        .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); width: 350px; }
+        h2 { text-align: center; color: #1c1e21; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #007bff; border: none; color: white; border-radius: 4px; cursor: pointer; font-size: 16px; }
+        button:hover { background-color: #0056b3; }
+        .toggle { text-align: center; margin-top: 15px; font-size: 14px; color: #606770; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="container" id="form-container">
+    <h2 id="form-title">Logowanie</h2>
+    
+    <input type="text" id="username" placeholder="Nazwa użytkownika">
+    <input type="password" id="password" placeholder="Hasło">
+    <div id="register-fields" style="display: none;">
+        <input type="email" id="email" placeholder="E-mail">
+    </div>
+
+    <button onclick="submitForm()" id="submit-btn">Zaloguj</button>
+    
+    <div class="toggle" onclick="toggleForm()" id="toggle-text">Nie masz konta? Zarejestruj się</div>
+    <p id="message" style="text-align: center; font-size: 13px;"></p>
+</div>
+
+<script>
+    let isLogin = true;
+
+    function toggleForm() {
+        isLogin = !isLogin;
+        document.getElementById('form-title').innerText = isLogin ? 'Logowanie' : 'Rejestracja';
+        document.getElementById('submit-btn').innerText = isLogin ? 'Zaloguj' : 'Zarejestruj';
+        document.getElementById('toggle-text').innerText = isLogin ? 'Nie masz konta? Zarejestruj się' : 'Masz konto? Zaloguj się';
+        document.getElementById('register-fields').style.display = isLogin ? 'none' : 'block';
+    }
+
+    async function submitForm() {
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
+        const messageElement = document.getElementById('message');
+
+        const url = isLogin ? '/api/auth/login' : '/api/auth/register';
+        const body = { username, password };
+        if (!isLogin) body.email = document.getElementById('email').value;
+
+        try {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(body)
+            });
+
+            if (response.ok) {
+                messageElement.style.color = 'green';
+                messageElement.innerText = isLogin ? 'Zalogowano pomyślnie!' : 'Zarejestrowano! Możesz się zalogować.';
+            } else {
+                messageElement.style.color = 'red';
+                messageElement.innerText = 'Błąd: ' + response.statusText;
+            }
+        } catch (error) {
+            messageElement.style.color = 'red';
+            messageElement.innerText = 'Błąd połączenia z serwerem.';
+        }
+    }
+</script>
+
+</body>
+</html>

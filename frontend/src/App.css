@@ -1,0 +1,253 @@
+.admin-container {
+  padding: 40px;
+  max-width: 1100px;
+  margin: 0 auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #e2e8f0;
+  padding-bottom: 15px;
+}
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.styled-table th {
+  background-color: #1e293b;
+  color: white;
+  text-align: left;
+  padding: 15px;
+}
+
+.styled-table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+/* Kolory Ról */
+.role-badge {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: bold;
+}
+.ROLE_ADMIN { background: #fee2e2; color: #991b1b; }
+.ROLE_USER { background: #dcfce7; color: #166534; }
+
+/* Przyciski */
+.btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.btn-edit { background: #3b82f6; color: white; margin-right: 5px; }
+.btn-delete { background: #ef4444; color: white; }
+.btn-save { background: #10b981; color: white; margin-right: 5px; }
+.btn-logout { background: #64748b; color: white; }
+
+.table-input {
+  padding: 5px;
+  border: 1px solid #3b82f6;
+  border-radius: 4px;
+  width: 90%;
+}
+
+/* --- RESPONSIVE AUTH CARD --- */
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh;
+  padding: 20px;
+}
+
+.auth-card {
+  background: white;
+  padding: 40px;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  width: 100%;
+  max-width: 400px; /* Na komputerze będzie wąski, na telefonie zajmie całość */
+}
+
+.text-error {
+  color: #d9534f !important;
+  font-weight: bold;
+  background-color: #fce4e4;
+  padding: 8px;
+  border-radius: 4px;
+  margin-top: 10px;
+}
+
+/* 1. KONTENER GŁÓWNY - Magia Flexboxa */
+.auth-container {
+  display: flex;
+  justify-content: center; /* Wyśrodkowanie w poziomie */
+  align-items: center;     /* Wyśrodkowanie w pionie */
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  padding: 20px;
+  box-sizing: border-box; /* Kluczowe: padding nie rozpycha strony */
+}
+
+/* 2. KARTA FORMULARZA - Box Model */
+.auth-card {
+  background: #ffffff;
+  padding: 30px;
+  border-radius: 8px;
+  border: 1px solid #e1e4e8;
+  width: 100%;
+  max-width: 380px;      /* Stała szerokość na dużych ekranach */
+  box-sizing: border-box; 
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* 3. TYPOGRAFIA */
+.auth-card h2 {
+  margin-top: 0;
+  color: #333;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+/* 4. ELEMENTY FORMULARZA - Interakcje */
+.simple-input {
+  width: 100%;
+  padding: 12px;
+  margin: 12px 0;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px; /* Idealne pod telefony (brak auto-zoomu) */
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Płynne przejście CSS3 */
+}
+
+.simple-input:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
+}
+
+/* 5. PRZYCISK AKCJI */
+.simple-btn {
+  width: 100%;
+  padding: 12px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.simple-btn:hover {
+  background-color: #0056b3;
+}
+
+/* 6. LINKI I KOMUNIKATY */
+.simple-link {
+  display: block;
+  text-align: center;
+  margin-top: 20px;
+  background: none;
+  border: none;
+  color: #007bff;
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.simple-message {
+  color: #d9534f;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* 7. RESPONSYWNOŚĆ - Media Queries */
+@media (max-width: 480px) {
+  .auth-card {
+    padding: 20px;
+    border: none;      /* Na małym ekranie rezygnujemy z obramowania */
+    box-shadow: none;  /* Dla większej przejrzystości na telefonie */
+  }
+}
+
+/* --- MOBILE TABLE FIX --- */
+.table-wrapper {
+  overflow-x: auto; /* To pozwala przesuwać tabelę palcem na telefonie */
+  -webkit-overflow-scrolling: touch;
+}
+
+/* --- MEDIA QUERIES (Dostosowanie do urządzeń) --- */
+
+/* Dla Tabletów (poniżej 768px) */
+@media (max-width: 768px) {
+  .admin-container {
+    padding: 15px;
+  }
+  .admin-header {
+    flex-direction: column; /* Nagłówek i przycisk wyloguj jeden pod drugim */
+    text-align: center;
+    gap: 15px;
+  }
+  .styled-table th, .styled-table td {
+    padding: 8px; /* Mniejsze odstępy w tabeli */
+    font-size: 14px;
+  }
+}
+
+/* Media Query dla smartfonów */
+@media (max-width: 480px) {
+  /* Zmniejszamy główne nagłówki */
+  h1 {
+    font-size: 1.5rem !important;
+    text-align: center;
+  }
+
+  h2 {
+    font-size: 1.2rem !important;
+  }
+
+  /* Zmniejszamy czcionkę w tabeli i inputach */
+  .styled-table th, 
+  .styled-table td, 
+  .auth-input, 
+  .btn {
+    font-size: 0.85rem !important; /* Mniejsza, czytelna czcionka */
+    padding: 8px 10px !important;
+  }
+
+  /* Zmniejszamy info o zalogowanym użytkowniku */
+  .user-info {
+    font-size: 0.8rem;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  /* Rola (badge) też musi być mniejsza */
+  .role-badge {
+    font-size: 0.7rem;
+    padding: 3px 6px;
+  }
+
+  /* Panel logowania - mniejszy padding, żeby formularz nie zajmował całego ekranu w pionie */
+  .auth-card {
+    padding: 1.2rem;
+  }
+}
